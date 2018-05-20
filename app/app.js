@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 
 //include routes
 const index = require("./routes");
+const users = require("./routes/users")
 
 
 
@@ -15,6 +16,7 @@ app.use(cors({
 }));
 
 index(app);
+users(app);
 
 
 app.use((err, req, res, next) => {
