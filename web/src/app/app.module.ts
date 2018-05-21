@@ -6,21 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
+import { MainComponent } from './main/main.component';
 
 import { routing } from './app-routing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent
+    UserComponent,
+    MainComponent
   ],
   imports: [
-    BrowserModule,
-    routing,
-    HttpClientModule,
-    HttpModule,
-    FormsModule,
-    ReactiveFormsModule
+    BrowserModule, routing, HttpClientModule, HttpModule, FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,3 +12,8 @@
     </tr>
   </tbody>
 </table>
+<br>
+<div>
+  <p>{{username}}</p>
+  <input type="text" [(ngModel)]="userId" id="userId" (keyup.enter)="search()" />
+</div>

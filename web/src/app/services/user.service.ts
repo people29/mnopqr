@@ -10,14 +10,16 @@ import { Http } from '@angular/http';
 @Injectable()
 export class UserService {
     constructor(private http: Http) {}
-    // private userUrl: string;
 
     getUsers() {
         return this.http.get("http://localhost:9090/users");
     }
 
+    getUser(id) {
+        return this.http.get("http://localhost:9090/users/"+id);
+    }
+
     handleError(err): Promise<any> {
-        console.log(err);
         return Promise.reject(err);
     }
 };
