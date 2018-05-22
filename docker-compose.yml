@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  db:
+    image: mysql
+  web:
+    image: nginx
+    container_name: web
+    ports:
+      - "4200:80"
+    volumes:
+      - ./web:/var/www/html/website
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  app:
+    image: nginx
+    container_name: app
+    ports:
+      - "9090:80"
+    volumes:
+      - ./web:/var/www/html/website
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+
+docker_proxy:
+    image: nginx
+    container_name: docker_proxy
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
