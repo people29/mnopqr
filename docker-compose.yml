@@ -19,11 +19,3 @@ services:
     volumes:
       - ./web:/var/www/html/website
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-
-  docker_proxy:
-      image: nginx
-      container_name: docker_proxy
-      volumes:
-        - ./nginx/conf.d:/etc/nginx/conf.d
-      ports:
-        - "80:80"
