@@ -7,8 +7,6 @@ import { Router, ActivatedRoute, NavigationEnd,  } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,

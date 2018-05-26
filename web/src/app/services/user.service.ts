@@ -12,11 +12,11 @@ export class UserService {
     constructor(private http: Http) {}
 
     getUsers() {
-        return this.http.get("http://localhost:9090/users");
+        return this.http.get("http://localhost:8080/users");
     }
 
     getUser(id) {
-        return this.http.get("http://localhost:9090/users/"+id);
+        return this.http.get("http://localhost:8080/users/"+id);
     }
 
     handleError(err): Promise<any> {
