@@ -7,7 +7,7 @@ services:
     image: nginx
     container_name: web
     ports:
-      - "3000:80"
+      - "4200:80"
     volumes:
       - ./web/dist/web:/var/www/html/website
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
