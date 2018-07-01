@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  db:
-    image: mysql
+  # db:
+  #   image: mysql
   web:
     image: nginx
     container_name: web

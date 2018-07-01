@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-//include routes
+// #include routers
 const index = require("./routes");
 const users = require("./routes/users")
 

@@ -11,6 +11,6 @@ function main(req, res, next) {
 module.exports = (app)=> {
     let router = express.Router();
 
-    app.use("/app", router);
+    app.use("/api", router);
     router.get("/", main);
 }
