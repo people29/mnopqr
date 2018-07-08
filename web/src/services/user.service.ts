@@ -25,7 +25,7 @@ export class UserService {
     }
 
     getUser(id) {
-        return this.http.get("http://localhost:8080/users/"+id);
+        return this.http.get(environment.apiUrl + "/users/"+id);
     }
 
     handleError(err): Promise<any> {
