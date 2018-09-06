@@ -3,20 +3,27 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const tokenVerifier = require("./middleware/token.verify");
 
 // #include routers
 const index = require("./routes");
-const users = require("./routes/users")
-
-
+const auth = require("./routes/auth");
+const users = require("./routes/users");
 
 const app = express();
 app.use(cors({
     exposedHeaders: ["Content-disposition"]
 }));
 
+app.use(bodyParser.json({ limit: "1024kb" }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/api/static", express.static("resources"));
+
+require("./config/mongoose")();
+
 index(app);
-users(app);
+auth(app);
+users(app, tokenVerifier.verify);
 
 
 app.use((err, req, res, next) => {

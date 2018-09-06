@@ -1,30 +1,31 @@
 "use strict";
-
 const express = require("express");
-
-let users = [
-    {id: 1, username: "admin", role: "admin"},
-    {id: 2, username: "account", role: "account"}
-];
+const userService = require("../services/user.service");
 
 function getUsers(req, res, next) {
-    res.status(200).send(users);
-    next(); return;
-}
-
-function getUserById(req, res, next) {
-    let id = req.params.id;
-    let user = users.find((user)=> {
-        return user.id == id;
+    userService.findAll().then(users => {
+        res.status(200).send(users);
+        next(); return;
+    }).catch(err => {
+        res.status(400).send(err);
     });
-    res.send(user);
-    next(); return;
 }
 
-module.exports = (app) => {
+function getUserByName(req, res, next) {
+    let username = req.params.username;
+
+    userService.findUser(username).then(user => {
+        res.status(200).send(user);
+        next(); return;
+    }).catch(err => {
+        res.status(400).send(err);
+    });
+}
+
+module.exports = (app, verify) => {
     let router = express.Router();
-    app.use("/users", router);
+    app.use("/api/users", verify, router);
 
     router.get("/", getUsers);
-    router.get("/:id", getUserById);
+    router.get("/:username", getUserByName);
 };
