@@ -3,7 +3,7 @@ import {catchError, tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Location } from '@angular/common';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 
 // const httpOptions = {
 //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user.component';
-import { MainComponent } from './main/main.component';
+import { UserComponent } from './component/user/user.component';
+import { MainComponent } from './component/main/main.component';
 
 import { routing } from './app-routing.module';
-import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
+import { MainDashboardComponent } from './component/main-dashboard/main-dashboard.component';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
