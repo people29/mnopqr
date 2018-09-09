@@ -20,6 +20,8 @@ import { UserComponent } from './component/user/user.component';
 import { LoginComponent } from './component/login/login.component';
 import { MainComponent } from './component/main/main.component';
 import { MainDashboardComponent } from './component/main-dashboard/main-dashboard.component';
+import { AdminDashboardComponent } from './component/admin-dashboard/admin-dashboard.component';
+import { AdminMainComponent } from './component/admin-main/admin-main.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { MainDashboardComponent } from './component/main-dashboard/main-dashboar
     MainComponent,
     MainDashboardComponent,
     LoginComponent,
+    AdminDashboardComponent,
+    AdminMainComponent,
   ],
   imports: [
     BrowserModule,
