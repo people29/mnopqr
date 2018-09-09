@@ -1,7 +1,7 @@
 import { Observable, of, throwError as observableThrowError } from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { environment } from '../../environments/environment';
 
@@ -11,8 +11,8 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class UserService {
-    constructor(private http: Http, location: Location) {
-        console.log("windown location : ", window.location);
+    constructor(private http: HttpClient, location: Location) {
+        // console.log("windown location : ", window.location);
         // console.log("location protocal : ", location.protocol);
         // console.log("location host : ", location.host);
         // console.log("location hostname : ", location.hostname);
@@ -20,12 +20,12 @@ export class UserService {
         // console.log("location port : ", location.port);
     }
 
-    getUsers() {
-        return this.http.get(environment.apiUrl + "/users");
+    getUsers(): Observable<any> {
+        return this.http.get<any>(environment.apiUrl + "/api/users");
     }
 
-    getUser(id) {
-        return this.http.get(environment.apiUrl + "/users/"+id);
+    getUser(id): Observable<any> {
+        return this.http.get<any>(environment.apiUrl + "/api/users/"+id);
     }
 
     handleError(err): Promise<any> {

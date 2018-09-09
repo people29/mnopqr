@@ -2,13 +2,13 @@
   <thead>
     <tr>
       <th>Username</th>
-      <th>Role</th>
+      <th>email</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let user of users">
-      <td>{{ user.username }}</td>
-      <td>{{ user.role }}</td>
+      <td>{{ user.display }}</td>
+      <td>{{ user.email }}</td>
     </tr>
   </tbody>
 </table>

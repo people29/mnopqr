@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const config = require("../config");
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const sha256 = require("sha256");
-const UserService = require("../services/user.service");
+const config = require('../config');
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const sha256 = require('sha256');
+const UserService = require('../services/user.service');
 
 function login(req, res, next) {
     UserService.findUser(req.body.login)
@@ -15,13 +15,13 @@ function login(req, res, next) {
         } else {
             next({
                 code: 401,
-                data: "authorization failed"
+                data: 'authorization failed'
             });
         }
     }).catch(err => {
         next({
             code: 401,
-            data: "authorization failed"
+            data: 'authorization failed'
         });
     });
 }
@@ -33,7 +33,7 @@ const createToken = (login, id) => {
             id: id
         }
     }, config.secret, {
-        expiresIn: 3600,
+        expiresIn: 60, //second
         algorithm: 'HS256'
     })
     return token
@@ -41,7 +41,7 @@ const createToken = (login, id) => {
 
 module.exports = (app)=> {
     let router = express.Router();
-    app.use("/auth", router);
+    app.use('/auth', router);
 
-    router.post("/login", login);
+    router.post('/login', login);
 }
