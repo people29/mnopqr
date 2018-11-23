@@ -1,25 +1,38 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { of } from 'rxjs';
+import { Location } from '@angular/common';
 import { UserComponent } from './user.component';
+import { UserService } from '../../services/user.service';
+import { HttpClient } from '@angular/common/http';
 
-describe('UserComponent', () => {
+
+describe('UserComponent', ()=> {
   let component: UserComponent;
-  let fixture: ComponentFixture<UserComponent>;
+  let userService: UserService;
+  let http: HttpClient;
+  let location: Location;
+  let spy: any;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UserComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(UserComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  beforeEach(()=> {
+    userService = new UserService(http, location);
+    component = new UserComponent(userService);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => {
+    userService = null;
+    component = null;
   });
+
+  it('on init', () => {
+    //Stub:
+    // loginServiceStub = {
+    //   logIn: jasmine.createSpy('logIn').and.returnValue(Observable.of(true))
+    // }
+    //In the test:
+    //const navigateByUrlSpy = spyOn(router, 'navigateByUrl').and.callThrough();
+
+    spyOn(userService, 'getUsers').and.returnValue(of([{name:"xx"}]));
+    component.ngOnInit();
+    expect(userService.getUsers).toHaveBeenCalled();
+  });
+
 });

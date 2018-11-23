@@ -1,0 +1,57 @@
+
+@import 'variable';
+
+/*******************
+/*Top bar
+*******************/
+.topbar {
+    background: $topbar;
+    .navbar-header{
+        background: $topbar-alt;
+    }
+    .top-navbar .navbar-header .navbar-brand .light-logo{
+        display: none;
+        color:rgba(0, 0, 0, 0.7);
+    }
+    .navbar-light .navbar-nav .nav-item > {
+        a.nav-link {
+
+            color: rgba(0, 0, 0, 0.7)!important;
+            &:hover,
+            &:focus {
+                 color: rgba(0, 0, 0, 1)!important;
+            }
+        }
+    }
+}
+
+
+
+/*******************
+/*sidebar navigation
+*******************/
+
+.label-themecolor{
+    background:$themecolor;
+}
+
+.sidebar-nav>ul>li.active>a {
+    color: $themecolor;
+    border-color: $themecolor;
+    i {
+       color: $themecolor;
+    }
+}
+
+.sidebar-nav ul li a {
+    &.active,
+    &:hover {
+      color: $themecolor;
+      i {
+        color: $themecolor;
+      }
+    }
+}
+.sidebar-nav>ul>li>a i{
+    color:$sidebar-icons;
+}

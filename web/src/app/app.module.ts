@@ -14,6 +14,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { SalaryService } from './services/salary.service';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './component/user/user.component';
@@ -21,7 +22,7 @@ import { LoginComponent } from './component/login/login.component';
 import { MainComponent } from './component/main/main.component';
 import { MainDashboardComponent } from './component/main-dashboard/main-dashboard.component';
 import { AdminDashboardComponent } from './component/admin-dashboard/admin-dashboard.component';
-import { AdminMainComponent } from './component/admin-main/admin-main.component';
+import { SalaryComponent } from './component/salary/salary.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { AdminMainComponent } from './component/admin-main/admin-main.component'
     MainDashboardComponent,
     LoginComponent,
     AdminDashboardComponent,
-    AdminMainComponent,
+    SalaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +61,7 @@ import { AdminMainComponent } from './component/admin-main/admin-main.component'
     AuthGuard,
     AuthService,
     UserService,
+    SalaryService,
     JwtHelperService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],

@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   isLogin(): boolean {
+    if (environment.env === "dev") return true;
     return !this.jwtHelper.isTokenExpired(this.getToken());
   }
 

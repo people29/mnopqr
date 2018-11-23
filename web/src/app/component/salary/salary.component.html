@@ -1,0 +1,81 @@
+<div id="salary">
+  <form id="salary-form" autocomplete="off">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label text-right">Monthly</label>
+      <label class="col-sm-3 col-form-label">November 2018</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label text-right">Workday</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" name="workday" id="workday" [(ngModel)]="workday">
+      </div>
+      <label class="col-sm-4 col-form-label">Days x 3500 THB</label>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label text-right">Exclude Tax (3%)</label>
+      <label class="col-sm-3 col-form-label">
+        {{ (workday * 3500) }} - {{ ((workday * 3500) * (3/100)) }} = {{ (workday * 3500) - ((workday * 3500) *
+        (3/100)) }}
+      </label>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label text-right">Total Amount</label>
+      <label class="col-sm-2 col-form-label">{{(workday * 3500)}}</label>
+      <div class="col-sm-7 text-right">
+        <button type="button" class="btn btn-secondary btn-sm">Save</button>
+      </div>
+    </div>
+  </form>
+
+  <div id="salary-result">
+    <table class="table border-bottom">
+      <thead>
+        <tr>
+          <th scope="col">Monthly</th>
+          <th scope="col">Date</th>
+          <th scope="col">Workday</th>
+          <th scope="col">Total Amount</th>
+          <th scope="col">Tax</th>
+          <th scope="col">Net Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">Oct/2018</td>
+          <td>25/11/2018</td>
+          <td>21</td>
+          <td>73500</td>
+          <td>2205</td>
+          <td>71295</td>
+        </tr>
+        <tr>
+          <td scope="row">Nov/2018</td>
+          <td>25/11/2018</td>
+          <td>21</td>
+          <td>73500</td>
+          <td>2205</td>
+          <td>71295</td>
+        </tr>
+        <tr>
+          <td scope="row">Dec/2018</td>
+          <td>25/11/2018</td>
+          <td>21</td>
+          <td>73500</td>
+          <td>2205</td>
+          <td>71295</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th scope="row">Summary</th>
+          <th></th>
+          <th>63</th>
+          <th>220500</th>
+          <th>6615</th>
+          <th>213885</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+</div>
