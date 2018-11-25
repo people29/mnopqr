@@ -1,78 +1,85 @@
 <div id="salary">
-  <form id="salary-form" autocomplete="off">
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label text-right">Monthly</label>
-      <label class="col-sm-3 col-form-label">November 2018</label>
+  <div class="row">
+
+    <div class="col-sm-11">
+      <select name="ofYear" [ngModel]="currentYear" #v (change)="changeYear(v.value)">
+        <option *ngFor="let year of listYear" [value]="year">
+          {{ year }}
+        </option>
+      </select>
     </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label text-right">Workday</label>
-      <div class="col-sm-1">
-        <input type="text" class="form-control" name="workday" id="workday" [(ngModel)]="workday">
+    <div class="col-sm-1 text-right">
+      <a data-toggle="collapse" href="#salary-form" role="button" aria-expanded="false" aria-controls="salary-form">
+        <i class="fas fa-plus-circle" title="add new salary">&nbsp;&nbsp;</i>
+      </a>
+    </div>
+  </div>
+  <div class="card">
+    <form id="salary-form" autocomplete="off" class="collapse">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">Monthly</label>
+        <label class="col-sm-3 col-form-label">{{monthlyDisplay}}</label>
       </div>
-      <label class="col-sm-4 col-form-label">Days x 3500 THB</label>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label text-right">Exclude Tax (3%)</label>
-      <label class="col-sm-3 col-form-label">
-        {{ (workday * 3500) }} - {{ ((workday * 3500) * (3/100)) }} = {{ (workday * 3500) - ((workday * 3500) *
-        (3/100)) }}
-      </label>
-    </div>
-    <div class="form-group row">
-      <label class="col-sm-2 col-form-label text-right">Total Amount</label>
-      <label class="col-sm-2 col-form-label">{{(workday * 3500)}}</label>
-      <div class="col-sm-7 text-right">
-        <button type="button" class="btn btn-secondary btn-sm">Save</button>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">Workday</label>
+        <div class="col-sm-1">
+          <input type="text" class="form-control" name="workday" id="workday" [(ngModel)]="salary.workdays" (keyup)="onKeyWorkdays()">
+        </div>
+        <label class="col-sm-4 col-form-label">Days x {{salary.amountPerDay}} THB</label>
       </div>
-    </div>
-  </form>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">Exclude Tax ({{salary.taxRate}}%)</label>
+        <label class="col-sm-3 col-form-label">{{salary.totalAmount}} - {{salary.tax}} = {{salary.amount}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">Total Amount</label>
+        <label class="col-sm-2 col-form-label">{{salary.totalAmount}}</label>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right" for="remark">Remark</label>
+        <div class="col-sm-5">
+          <textarea class="form-control" id="remark" name="remark" rows="2" [(ngModel)]="salary.remark"></textarea>
+        </div>
+        <div class="col-sm-2" style="position: relative; top: 30px">
+          <button type="button" class="btn btn-secondary btn-sm" (click)="save()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   <div id="salary-result">
     <table class="table border-bottom">
       <thead>
         <tr>
-          <th scope="col">Monthly</th>
-          <th scope="col">Date</th>
-          <th scope="col">Workday</th>
-          <th scope="col">Total Amount</th>
-          <th scope="col">Tax</th>
-          <th scope="col">Net Amount</th>
+          <th class="text-center" scope="col">Monthly</th>
+          <th class="text-center" scope="col">Date</th>
+          <th class="text-center" scope="col">Workdays</th>
+          <th class="text-center" scope="col">Net Amount</th>
+          <th class="text-center" scope="col">Tax</th>
+          <th class="text-center" scope="col">Total Amount</th>
+          <th class="text-center" scope="col">Remark</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td scope="row">Oct/2018</td>
-          <td>25/11/2018</td>
-          <td>21</td>
-          <td>73500</td>
-          <td>2205</td>
-          <td>71295</td>
-        </tr>
-        <tr>
-          <td scope="row">Nov/2018</td>
-          <td>25/11/2018</td>
-          <td>21</td>
-          <td>73500</td>
-          <td>2205</td>
-          <td>71295</td>
-        </tr>
-        <tr>
-          <td scope="row">Dec/2018</td>
-          <td>25/11/2018</td>
-          <td>21</td>
-          <td>73500</td>
-          <td>2205</td>
-          <td>71295</td>
+        <tr *ngFor="let row of salaryList">
+          <td class="text-center" scope="row">{{row.monthly}}</td>
+          <td class="text-center">{{row.dateCreated | date: 'dd/MM/yyyy'}}</td>
+          <td class="text-center">{{row.workdays}}</td>
+          <td class="text-center">{{row.amount | number}}</td>
+          <td class="text-center">{{row.tax | number}}</td>
+          <td class="text-center">{{row.totalAmount | number}}</td>
+          <td>{{row.remark}}</td>
         </tr>
       </tbody>
       <tfoot>
         <tr>
           <th scope="row">Summary</th>
+          <th class="text-center"></th>
+          <th class="text-center">{{grandWorkdays}}</th>
+          <th class="text-center">{{grandAmount | number}}</th>
+          <th class="text-center">{{grandTax | number}}</th>
+          <th class="text-center">{{grandTotalAmount | number}}</th>
           <th></th>
-          <th>63</th>
-          <th>220500</th>
-          <th>6615</th>
-          <th>213885</th>
         </tr>
       </tfoot>
     </table>

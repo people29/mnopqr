@@ -9,6 +9,7 @@ const tokenVerifier = require("./middleware/token.verify");
 const index = require("./routes");
 const auth = require("./routes/auth");
 const users = require("./routes/users");
+const salary = require("./routes/salary");
 
 const app = express();
 app.use(cors({
@@ -19,11 +20,13 @@ app.use(bodyParser.json({ limit: "1024kb" }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/static", express.static("resources"));
 
-require("./config/mongoose")();
+// #start connectiong mongo db#
+// require("./config/mongoose")();
 
 index(app);
 auth(app);
 users(app, tokenVerifier.verify);
+salary(app);
 
 
 app.use((err, req, res, next) => {

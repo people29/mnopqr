@@ -1,15 +1,14 @@
 "use strict"
-
-const User = require("../models/user.model");
+const UserMg = require("../models_mongo/user.model");
 
 function findUser(username) {
-    return User.findOne({
+    return UserMg.findOne({
         login: username
     });
 }
 
 function findAll() {
-    return User.find();
+    return UserMg.find();
 }
 
 module.exports = {

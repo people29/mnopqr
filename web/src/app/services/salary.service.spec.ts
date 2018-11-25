@@ -1,6 +1,6 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-
+import { environment } from '../../environments/environment';
 import { SalaryService } from './salary.service';
 
 fdescribe('SalaryService', ()=> {
@@ -25,8 +25,8 @@ fdescribe('SalaryService', ()=> {
   describe('#getAll', () => {
     it('should return an Observable<[]>', () => {
       const dummyUsers = [
-        { login: 'John' },
-        { login: 'Doe' }
+        { workday: 20, amount: 20000, tax: 100 },
+        { workday: 12, amount: 20000, tax: 100 },
       ];
 
       service.getAll().subscribe(users => {
@@ -34,7 +34,7 @@ fdescribe('SalaryService', ()=> {
         expect(users).toEqual(dummyUsers);
       });
 
-      const req = httpMock.expectOne('/api/salary');
+      const req = httpMock.expectOne(environment.apiUrl + '/api/salary');
       expect(req.request.method).toBe('GET');
       req.flush(dummyUsers);
     });
@@ -52,7 +52,7 @@ fdescribe('SalaryService', ()=> {
 
       service.save(data).subscribe();
 
-      const req = httpMock.expectOne('/api/salary/save');
+      const req = httpMock.expectOne(environment.apiUrl + '/api/salary');
       expect(req.request.method).toBe('POST');
       req.flush(data);
     });
