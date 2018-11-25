@@ -12,7 +12,6 @@ function getAll() {
 }
 
 function getByYear(year) {
-    console.log(year);
     return Salary.findAll({
         where: {
             monthly: {
