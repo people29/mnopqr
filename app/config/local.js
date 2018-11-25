@@ -5,7 +5,7 @@ module.exports = {
     "secret": "MnrA5tpk!@r4-5@y7rXm",
 
     "sequelize": new Sequelize('mnopqr', 'root', 'rootpass', {
-        logging: true,
+        logging: false,
         host: '127.0.0.1',
         port: 3307,
         dialect: 'mysql',

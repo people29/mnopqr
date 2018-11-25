@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { routing } from './app-routing.module';
 import { AuthGuard } from './guard/auth.guard';
@@ -49,6 +50,7 @@ import { SalaryComponent } from './component/salary/salary.component';
     MatCheckboxModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,
+    NgbModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

@@ -28,12 +28,19 @@
         <label class="col-sm-4 col-form-label">Days x {{salary.amountPerDay}} THB</label>
       </div>
       <div class="form-group row">
+        <label class="col-sm-2 col-form-label text-right">Other Amount</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" name="otherAmount" id="otherAmount" [(ngModel)]="salary.otherAmount"
+            (blur)="calOtherAmount()">
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-sm-2 col-form-label text-right">Exclude Tax ({{salary.taxRate}}%)</label>
-        <label class="col-sm-3 col-form-label">{{salary.totalAmount}} - {{salary.tax}} = {{salary.amount}}</label>
+        <label class="col-sm-3 col-form-label">{{salary.totalAmount}} - {{salary.tax}} = {{salary.amount | number}}</label>
       </div>
       <div class="form-group row">
         <label class="col-sm-2 col-form-label text-right">Total Amount</label>
-        <label class="col-sm-2 col-form-label">{{salary.totalAmount}}</label>
+        <label class="col-sm-2 col-form-label">{{salary.totalAmount | number}}</label>
       </div>
       <div class="form-group row">
         <label class="col-sm-2 col-form-label text-right" for="remark">Remark</label>
@@ -41,7 +48,7 @@
           <textarea class="form-control" id="remark" name="remark" rows="2" [(ngModel)]="salary.remark"></textarea>
         </div>
         <div class="col-sm-2" style="position: relative; top: 30px">
-          <button type="button" class="btn btn-secondary btn-sm" (click)="save()">Save</button>
+          <button type="button" class="btn btn-secondary btn-sm" (click)="openModal(content)">Save</button>
         </div>
       </div>
     </form>
@@ -84,5 +91,19 @@
       </tfoot>
     </table>
   </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Are you sure</h4>
+    </div>
+    <div class="modal-body">
+      <p>Workdays: {{salary.workdays}} days</p>
+      <p>Total: {{salary.totalAmount | number}} THB</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="c('no')">No</button>
+      <button type="button" ngbAutofocus class="btn btn-outline-secondary btn-sm" (click)="c('save')">Yes</button>
+    </div>
+  </ng-template>
 
 </div>

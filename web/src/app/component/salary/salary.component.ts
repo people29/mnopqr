@@ -1,34 +1,41 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SalaryService } from '../../services/salary.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Salary } from '../../models/salary.model';
 import * as moment from 'moment';
 
 @Component({
-  providers: [SalaryService],
+  providers: [SalaryService, NgbModalConfig, NgbModal],
   selector: 'salary',
   templateUrl: './salary.component.html',
-  styleUrls: ['./salary.component.css']
+  styleUrls: ['./salary.component.css'],
 })
 export class SalaryComponent implements OnInit {
   private salary: Salary;
   private monthlyDisplay: string;
   private salaryList: Salary[];
-  private currentYear: string;
-  private listYear: any[] = [];
   private grandWorkdays: number = 0;
   private grandAmount: number = 0;
   private grandTax: number = 0;
   private grandTotalAmount: number = 0;
 
+  public listYear: any[] = [];
+  public currentYear: number;
+
   constructor(
     private salaryService: SalaryService,
-  ) { }
+    config: NgbModalConfig,
+    private modalService: NgbModal
+  ) {
+    config.backdrop = 'static';
+    config.keyboard = false;
+   }
 
   ngOnInit() {
-    this.currentYear = moment().format('YYYY');
-    this.prepareListYear();
-    this.initSalaryForm();
+    this.currentYear = parseInt(moment().format('YYYY'));
+    this.listYear = this.getYears(this.currentYear);
 
+    this.initSalaryForm();
     this.getSalaryByYear(this.currentYear);
   }
 
@@ -38,9 +45,17 @@ export class SalaryComponent implements OnInit {
     this.salary.amount = (this.salary.totalAmount) - (this.salary.tax);
   }
 
+  calOtherAmount() {
+    this.salary.amount = sum(this.salary.otherAmount, this.salary.amount);
+    this.salary.totalAmount = sum(this.salary.otherAmount, this.salary.totalAmount);
+
+    function sum(num1: any = 0, num2: any = 0) {
+      return parseFloat(num1) + parseFloat(num2);
+    }
+  }
+
   save() {
-    //confirm modal
-    if (this.salary.workdays > 0) {
+    if (this.salary.totalAmount > 0) {
       this.salaryService.save(this.salary).subscribe(resp => {
         console.log('save success.');
         this.initSalaryForm();
@@ -49,22 +64,31 @@ export class SalaryComponent implements OnInit {
     }
   }
 
-  changeYear(year) {
-    this.getSalaryByYear(year);
-
-    //given current year is 2018 then listYear is [2018, 2017, 2016]
-    //change year to 2016 then expect listYear is [2018, 2017, 2016, 2015, 2014]
-    //change year to 2017 then expect listYear is [2018, 2017, 2016, 2015]
-    //change year to 2015 then expect listYear is [2017, 2016, 2015, 2014, 2013]
-    //change year to 2014 then expect listYear is [2016, 2015, 2014, 2013, 2012]
-    //change year to 2013 then expect listYear is [2015, 2014, 2013, 2012, 2011]
+  openModal(content) {
+    this.modalService.open(content, { size: 'sm' }).result.then(rs => {
+        if (rs === 'save') this.save();
+    });
   }
 
-  private prepareListYear() {
-    let curYear = parseInt(this.currentYear);
-    for(let i = curYear - 2; i <= curYear; i++) {
-      this.listYear.push(i.toString());
+  changeYear(year) {
+    this.getSalaryByYear(year);
+    this.listYear = this.getYears(parseInt(year), this.currentYear);
+  }
+
+  private getYears(year: number, currentYear: number = null) {
+    let years = [];
+    if (year === currentYear || !currentYear) {
+      for (let i = year - 2; i <= year; i++) {
+        years.push(i);
+      }
+    } else {
+      let nextYear = (year + 2 > currentYear) ? currentYear : year + 2;
+      for (let i = year - 2; i <= nextYear; i++) {
+        years.push(i);
+      }
     }
+
+    return years;
   }
 
   private initSalaryForm() {
@@ -87,10 +111,10 @@ export class SalaryComponent implements OnInit {
 
       this.salaryList = resp;
       resp.map(data => {
-        this.grandAmount+=data.amount;
-        this.grandTax+=data.tax;
-        this.grandTotalAmount+=data.totalAmount;
-        this.grandWorkdays+=data.workdays;
+        this.grandAmount += data.amount;
+        this.grandTax += data.tax;
+        this.grandTotalAmount += data.totalAmount;
+        this.grandWorkdays += data.workdays;
       });
     });
   }
